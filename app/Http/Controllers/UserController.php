@@ -71,6 +71,12 @@ class UserController extends Controller {
             }
             return response()->json($data, $data['code']);
         }
-    }
+        
+     public function login(Request $request){
+         
+        $jwtAuth = new \JwtAuth();
+        return $jwtAuth->signup();
+    }      
+}
 
   
