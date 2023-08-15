@@ -108,16 +108,57 @@ class UserController extends Controller {
     }      
     
     public function update(Request $request){
+        
+        //Check if user is identified
         $token = $request->header('Authorization');
         $jwt = new \JwtAuth();
         $checkToken = $jwtAuth->checkToken($token);
         
-        if($checkToken){
-            echo "<h1>Login Success</h1>";
+         // Collect data per post
+        $json = $request->input('json', null);
+        $params_array = json_decode($json, true);
+            
+        
+        
+        if($checkToken && !empty($params_array)){
+            
+            // Remove identified user
+            $checkToken = $jwtAuth->checkToken($token, true);
+             
+            // Validate the data
+            $validate = \Validator::make($params_array, [
+                'name' => 'required|alpha',
+                'surname' => 'required|alpha',
+                'email' => 'required|email|unique:users,'.$user->sub
+            ]);
+            
+            // Remove the fields I don't want to update
+            unset($params_array['id']);
+            unset($params_array['role']);
+            unset($params_array['password']);
+            unset($params_array['created_at']);
+            unset($params_array['id']);
+            unset($params_array['remember_token']);
+            
+            // Update the user in DB
+            $user_update = User::where('id', $user-sub)->update($params_array);
+            
+            // Return an array with the result
+            $data = array(
+                'code' => 200,
+                'status' => 'Success',
+                'message' => $user,
+                'change' => $params_array
+            );
+            
         }else{
-            echo "<h1>Login Invalide</h1>";
+            $data = array(
+                'code' => 400,
+                'status' => 'Error',
+                'message' => 'User are not identicated'
+            );
         }
-        die();
+        return response()->json($data, $data['code']);
     }
     
 }
