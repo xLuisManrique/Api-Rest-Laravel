@@ -29,3 +29,4 @@ Route::get('testing', 'App\Http\Controllers\PruebasController@testOrm');
     // ROUTE USER CONTROLLER
     Route::post('api/register', 'App\Http\Controllers\UserController@register');
     Route::post('api/login', 'App\Http\Controllers\UserController@login');
+    Route::post('api/user/update', 'App\Http\Controllers\UserController@update');
