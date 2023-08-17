@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+// Charge Class
+use App\Http\Middleware\ApiAuthMiddleware;
 
 // ROUTE OF TESTING
 Route::get('/', function () {
@@ -30,3 +32,6 @@ Route::get('testing', 'App\Http\Controllers\PruebasController@testOrm');
     Route::post('api/register', 'App\Http\Controllers\UserController@register');
     Route::post('api/login', 'App\Http\Controllers\UserController@login');
     Route::put('api/user/update', 'App\Http\Controllers\UserController@update');
+    Route::post('api/user/upload', 'App\Http\Controllers\UserController@upload')->middleware(ApiAuthMiddleware::class);
+    Route::get('api/user/avatar/{filename}', 'App\Http\Controllers\UserController@getImage');
+    Route::get('api/user/detail/{id}', 'App\Http\Controllers\UserController@detail');
