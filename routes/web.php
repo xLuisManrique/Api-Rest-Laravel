@@ -24,9 +24,9 @@ Route::get('testing', 'App\Http\Controllers\PruebasController@testOrm');
 // ROUTE OF API
 
     // ROUTE API TESTING
-    Route::get('testingUser', 'App\Http\Controllers\UserController@pruebas');
-    Route::get('testingCategory', 'App\Http\Controllers\CategoryController@pruebas');
-    Route::get('testingPost', 'App\Http\Controllers\PostController@pruebas');
+        // Route::get('testingUser', 'App\Http\Controllers\UserController@pruebas');
+        // Route::get('testingCategory', 'App\Http\Controllers\CategoryController@pruebas');
+        // Route::get('testingPost', 'App\Http\Controllers\PostController@pruebas');
     
     // ROUTE USER CONTROLLER
     Route::post('api/register', 'App\Http\Controllers\UserController@register');
@@ -35,3 +35,6 @@ Route::get('testing', 'App\Http\Controllers\PruebasController@testOrm');
     Route::post('api/user/upload', 'App\Http\Controllers\UserController@upload')->middleware(ApiAuthMiddleware::class);
     Route::get('api/user/avatar/{filename}', 'App\Http\Controllers\UserController@getImage');
     Route::get('api/user/detail/{id}', 'App\Http\Controllers\UserController@detail');
+    
+    // ROUTE CATEGORY CONTROLLER
+    Route::resource('api/category', 'App\Http\Controllers\CategoryController');
